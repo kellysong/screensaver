@@ -155,8 +155,13 @@ public class ScreenSaverView extends FrameLayout {
             v.setTranslationX(0f);
             v.setTranslationY(0f);
             v.setRotation(0f);
+            v.setRotationX(0);
+            v.setRotationY(0);
             v.setScaleX(1f);
             v.setScaleY(1f);
+            v.clearAnimation();
+
+
 //                v.setPivotX(0);
 //                v.setPivotY(0);
         }

@@ -7,7 +7,7 @@ package com.sjl.screensaver;
  * @version 1.0.0
  * @filename ScreenSaverAdv
  * @time 2020/11/5 11:33
- * @copyright(C) 2020 泰中科技
+ * @copyright(C) 2020 song
  */
 public class AdvModel {
     public static final int TYPE_IMG = 0;

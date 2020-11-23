@@ -18,5 +18,9 @@ public enum AdvAnimationEnum {
     // 缩放 + 透明渐变
     ScaleAlphaFromCenter,  // 从中心进行缩放+透明渐变
     //旋转+ 平移(带渐变，缩放)
-    RotateTranslate
+    RotateTranslate,
+    //翻转
+    Flip,
+    //翻牌3D效果
+    Rotate3D
 }

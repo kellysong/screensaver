@@ -13,6 +13,8 @@ import com.sjl.screensaver.DefaultLoader;
 import com.sjl.screensaver.ScreenSaverView;
 import com.sjl.screensaver.animator.AdvAnimator;
 import com.sjl.screensaver.animator.AlphaAnimator;
+import com.sjl.screensaver.animator.FlipAnimator;
+import com.sjl.screensaver.animator.Rotate3DAnimator;
 import com.sjl.screensaver.animator.RotateTranslateAnimator;
 import com.sjl.screensaver.animator.ScaleAlphaAnimator;
 import com.sjl.screensaver.animator.TranslateAnimator;
@@ -137,6 +139,14 @@ public class ScreenSaverActivity extends AppCompatActivity {
                 advAnimator = new RotateTranslateAnimator();
                 break;
             }
+            case Flip: {
+                advAnimator = new FlipAnimator();
+                break;
+            }
+            case Rotate3D: {
+                advAnimator = new Rotate3DAnimator();
+                break;
+            }
             default:
                 break;
         }
@@ -168,5 +178,6 @@ public class ScreenSaverActivity extends AppCompatActivity {
         super.onDestroy();
         screenSaverView.destroy();
     }
+
 
 }

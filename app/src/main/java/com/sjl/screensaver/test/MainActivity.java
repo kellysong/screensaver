@@ -1,5 +1,7 @@
 package com.sjl.screensaver.test;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends BaseActivity {
@@ -24,5 +26,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void _onTick(long millisUntilFinished) {
         textView.setText("倒计时：" + (millisUntilFinished / 1000) + "s跳转屏保");
+    }
+
+    public void btnOpen(View view) {
+        if (countDownTimer != null){
+            countDownTimer.cancel();
+        }
+        startActivity(new Intent(context, ScreenSaverActivity.class));
     }
 }
