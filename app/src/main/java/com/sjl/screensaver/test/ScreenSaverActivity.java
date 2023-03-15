@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.sjl.screensaver.AdvAnimationEnum;
 import com.sjl.screensaver.AdvModel;
@@ -28,7 +29,7 @@ public class ScreenSaverActivity extends AppCompatActivity {
     ScreenSaverView screenSaverView;
     Spinner spinner;
     AdvAnimationEnum[] data;
-
+    TextView currentIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,7 @@ public class ScreenSaverActivity extends AppCompatActivity {
         });
         screenSaverView = findViewById(R.id.screenSaverView);
         spinner = findViewById(R.id.spinner);
+        currentIndex = findViewById(R.id.tv_index);
         data = AdvAnimationEnum.values();
         spinner.setAdapter(new ArrayAdapter<AdvAnimationEnum>(this, android.R.layout.simple_list_item_1, data));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,12 +79,14 @@ public class ScreenSaverActivity extends AppCompatActivity {
 
         //设置播放间隔
         screenSaverView.setImgIntervalTime(4);
-        //加载广告数据
-        screenSaverView.load(advModels);
-        //循环播放广告
-        screenSaverView.play();
         //广告播放监听,用于统计播放次数
         screenSaverView.setPlayListener(new ScreenSaverView.PlayListener() {
+
+            @Override
+            public void onPlayChange(int position) {
+                Log.i("TestActivity", "当前索引："+position);
+                currentIndex.setText("当前索引："+position);
+            }
 
             @Override
             public void onSingleFinish(int position) {
@@ -94,6 +98,10 @@ public class ScreenSaverActivity extends AppCompatActivity {
                 Log.i("TestActivity", "周期播放结束");
             }
         });
+        //加载广告数据
+        screenSaverView.load(advModels);
+        //循环播放广告
+        screenSaverView.play();
 
 //        List<AdvModel> advModels = buildAdvModels();
 //        screenSaverView.setNewData(advModels);
@@ -102,19 +110,19 @@ public class ScreenSaverActivity extends AppCompatActivity {
 
     private List<AdvModel> buildAdvModels() {
         List<AdvModel> advModels = new ArrayList<>();
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1, 2 *1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2, 2 * 1000));
 //        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, R.raw.adv1598507723150));
 //        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, R.raw.adv1603785483407));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3, 2 * 1000));
+       /* advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4, 2 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5, 5 * 1000));
         //追加测试
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1, 4000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2, 10 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3, 20 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4, 30 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5));*/
         return advModels;
     }
 

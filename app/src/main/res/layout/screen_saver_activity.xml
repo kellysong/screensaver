@@ -22,7 +22,11 @@
             android:layout_height="wrap_content"
             android:onClick="btnPause"
             android:text="暂停播放" />
-
+        <TextView
+            android:id="@+id/tv_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前索引" />
     </LinearLayout>
 
     <LinearLayout

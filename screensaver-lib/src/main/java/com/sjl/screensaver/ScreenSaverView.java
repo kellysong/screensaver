@@ -96,6 +96,9 @@ public class ScreenSaverView extends FrameLayout {
         surfaceView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(surfaceView);
         surfaceView.setVisibility(View.GONE);
+        if (playListener != null) {
+            playListener.onPlayChange(currentPosition);
+        }
         initFirstMode(advModels.get(0));
     }
 
@@ -201,6 +204,9 @@ public class ScreenSaverView extends FrameLayout {
         AdvModel hideAdvModel = advModels.get(currentIndex);
         AdvModel showAdvModel = advModels.get(nextIndex);
         currentPosition = currentIndex;
+        if (playListener != null) {
+            playListener.onPlayChange(currentPosition);
+        }
         int hideType = hideAdvModel.getType();
         int showType = showAdvModel.getType();
         Object hideModel = hideAdvModel.getModel();
@@ -270,6 +276,7 @@ public class ScreenSaverView extends FrameLayout {
         if (advLoader != null) {
             advLoader.clear();
         }
+        playListener = null;
         removeAllViews();
     }
 
@@ -362,7 +369,13 @@ public class ScreenSaverView extends FrameLayout {
         if (advCount == 1) {
             AdvModel advModel = this.advModels.get(currentPosition);
             if (checkAdvModelType(advModel)) {
-                intervalTime = imgIntervalTime;
+                if (advModel.getPersistTime() > 0){
+                    intervalTime = advModel.getPersistTime();
+                }else {
+                    //否则使用默认值
+                    intervalTime = imgIntervalTime;
+                }
+
             } else {
                 intervalTime = 0;
             }
@@ -375,7 +388,12 @@ public class ScreenSaverView extends FrameLayout {
         }
         AdvModel nextAdvModel = this.advModels.get(nextPosition);
         if (checkAdvModelType(nextAdvModel)) {
-            intervalTime = imgIntervalTime;
+            if (nextAdvModel.getPersistTime() > 0){
+                intervalTime = nextAdvModel.getPersistTime();
+            }else {
+                //否则使用默认值
+                intervalTime = imgIntervalTime;
+            }
         } else {
             intervalTime = 0;
         }
@@ -404,6 +422,12 @@ public class ScreenSaverView extends FrameLayout {
     }
 
     public interface PlayListener {
+        /**
+         * 每次播放回调
+         *
+         * @param position 当前播放的广告索引
+         */
+        void onPlayChange(int position);
         /**
          * 单个广告播放结束单次回调
          *

@@ -21,9 +21,20 @@ public class AdvModel {
      */
     private Object model;
 
+    /**
+     * 持续时间，单位毫秒，图片起作用
+     */
+    private int persistTime;
+
     public AdvModel(int type, Object model) {
         this.type = type;
         this.model = model;
+    }
+
+    public AdvModel(int type, Object model, int persistTime) {
+        this.type = type;
+        this.model = model;
+        this.persistTime = persistTime;
     }
 
     public int getType() {
@@ -40,5 +51,13 @@ public class AdvModel {
 
     public void setModel(Object model) {
         this.model = model;
+    }
+
+    public int getPersistTime() {
+        return persistTime;
+    }
+
+    public void setPersistTime(int persistTime) {
+        this.persistTime = persistTime;
     }
 }
