@@ -3,6 +3,7 @@ package com.sjl.screensaver;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -87,8 +88,9 @@ public class ScreenSaverView extends FrameLayout {
         removeAllViews();
         for (int i = 1; i >= 0; i--) {
             ImageView imageView = new ImageView(getContext());
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            layoutParams.gravity = Gravity.CENTER;
+            imageView.setLayoutParams(layoutParams);
             addView(imageView);
             imageView.setVisibility(View.GONE);
         }

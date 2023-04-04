@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
+
+import java.io.File;
 
 import androidx.annotation.NonNull;
 
@@ -50,8 +53,37 @@ public class MediaPlayerUtils implements MediaPlayer.OnPreparedListener,
 
     }
 
-
+    /**
+     * 播放应用的资源文件或原始资源文件
+     *
+     * @param afd         /res/raw中或者asserts
+     * @param surfaceView
+     */
     public synchronized void play(AssetFileDescriptor afd, SurfaceView surfaceView) {
+        play(afd, null, null, surfaceView);
+    }
+
+    /**
+     * 播放外部存储上的音频文件
+     *
+     * @param file
+     * @param surfaceView
+     */
+    public synchronized void play(File file, SurfaceView surfaceView) {
+        play(null, file, null, surfaceView);
+    }
+
+    /**
+     * 播放来自网络的音频文件
+     *
+     * @param uri         Uri uri = Uri.parse("http://www.xxx.com/test.mp4");
+     * @param surfaceView
+     */
+    public synchronized void play(Uri uri, SurfaceView surfaceView) {
+        play(null, null, uri, surfaceView);
+    }
+
+    public synchronized void play(AssetFileDescriptor afd, File file, Uri uri, SurfaceView surfaceView) {
         if (mMediaPlayer == null) {
             return;
         }
@@ -60,7 +92,13 @@ public class MediaPlayerUtils implements MediaPlayer.OnPreparedListener,
             this.mSurfaceView.setZOrderOnTop(false);
             SurfaceHolder holder = this.mSurfaceView.getHolder();
             holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-            myCallback = new MyCallback(mMediaPlayer, afd);
+            if (afd != null) {
+                myCallback = new MyCallback(mMediaPlayer, afd);
+            } else if (file != null) {
+                myCallback = new MyCallback(mMediaPlayer, file);
+            } else if (uri != null) {
+                myCallback = new MyCallback(mMediaPlayer, uri,surfaceView.getContext());
+            }
             holder.addCallback(myCallback);
         } else {
             if (!mMediaPlayer.isPlaying()) {
@@ -84,12 +122,29 @@ public class MediaPlayerUtils implements MediaPlayer.OnPreparedListener,
 
     private static class MyCallback implements SurfaceHolder.Callback {
         private AssetFileDescriptor afd;
+        private File file;
+        private Uri uri;
+        private  Context context;
         private MediaPlayer mMediaPlayer;
         private boolean firstPlay;
 
         public MyCallback(MediaPlayer mediaPlayer, AssetFileDescriptor afd) {
-            this.mMediaPlayer = mediaPlayer;
+            init(mediaPlayer);
             this.afd = afd;
+        }
+
+        public MyCallback(MediaPlayer mediaPlayer, File file) {
+            init(mediaPlayer);
+            this.file = file;
+        }
+        public MyCallback(MediaPlayer mediaPlayer, Uri uri, Context context) {
+            init(mediaPlayer);
+            this.uri = uri;
+            this.context = context;
+        }
+
+        private void init(MediaPlayer mediaPlayer) {
+            this.mMediaPlayer = mediaPlayer;
             this.firstPlay = true;
         }
 
@@ -99,9 +154,18 @@ public class MediaPlayerUtils implements MediaPlayer.OnPreparedListener,
             if (firstPlay) {
                 try {
                     mMediaPlayer.reset();
-                    mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    if (afd != null){
+                        mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    }else if (file != null){
+                        mMediaPlayer.setDataSource(file.getAbsolutePath());
+                    }else if (uri != null){
+                        mMediaPlayer.setDataSource(context, uri);
+                    }
                     mMediaPlayer.setDisplay(holder);
-                    afd.close();
+                    if (afd != null){
+                        afd.close();
+                    }
+
                     mMediaPlayer.prepareAsync();
                 } catch (Exception e) {
                     Log.e(TAG, "播放异常1", e);

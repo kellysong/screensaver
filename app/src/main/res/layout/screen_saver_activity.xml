@@ -51,6 +51,7 @@
     <com.sjl.screensaver.ScreenSaverView
         android:id="@+id/screenSaverView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/ssv_bg"/>
 
 </LinearLayout>

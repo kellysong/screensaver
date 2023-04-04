@@ -1,5 +1,6 @@
 package com.sjl.screensaver.test;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -110,6 +111,10 @@ public class ScreenSaverActivity extends AppCompatActivity {
 
     private List<AdvModel> buildAdvModels() {
         List<AdvModel> advModels = new ArrayList<>();
+        //加载网络图片，建议下载到本地再加载
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, "https://pics5.baidu.com/feed/aa18972bd40735fa421aefed2dcff8b80e240822.jpeg@f_auto?token=337b0fc08979538e99c3bc166d36c095", 5 *1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, Uri.parse("https://vd2.bdstatic.com/mda-pd3aazh2u5t20pru/sc/cae_h264/1680593647501835295/mda-pd3aazh2u5t20pru.mp4?v_from_s=bdapp-bdappcore-feed-hna")));
+
         advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1, 2 *1000));
         advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2, 2 * 1000));
 //        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, R.raw.adv1598507723150));
