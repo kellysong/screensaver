@@ -34,4 +34,11 @@ public class MainActivity extends BaseActivity {
         }
         startActivity(new Intent(context, ScreenSaverActivity.class));
     }
+
+    public void btnLocal(View view) {
+        if (countDownTimer != null){
+            countDownTimer.cancel();
+        }
+        startActivity(new Intent(context, ScreenSaverActivity.class));
+    }
 }

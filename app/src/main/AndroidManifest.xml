@@ -18,7 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScreenSaverActivity" />
+
+        <activity android:name=".ScreenSaverActivity"
+            android:theme="@style/FullScreenTheme"/>
     </application>
 
 </manifest>

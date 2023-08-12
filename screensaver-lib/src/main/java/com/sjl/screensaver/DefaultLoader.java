@@ -92,7 +92,9 @@ public class DefaultLoader implements AdvLoader {
             //图片不需要
             loaderListener.onFinish();
         } else {
-            mediaPlayerUtils.setLoaderListener(loaderListener);
+            if (mediaPlayerUtils != null){
+                mediaPlayerUtils.setLoaderListener(loaderListener);
+            }
         }
     }
 

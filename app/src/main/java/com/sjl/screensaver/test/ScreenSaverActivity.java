@@ -119,9 +119,10 @@ public class ScreenSaverActivity extends AppCompatActivity {
         advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2, 2 * 1000));
 //        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, R.raw.adv1598507723150));
 //        advModels.add(new AdvModel(AdvModel.TYPE_VIDEO, R.raw.adv1603785483407));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3, 2 * 1000));
-       /* advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4, 2 * 1000));
-        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5, 5 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_3, 10 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_4, 10 * 1000));
+        advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_5, 10 * 1000));
+       /*
         //追加测试
         advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_1, 4000));
         advModels.add(new AdvModel(AdvModel.TYPE_IMG, R.mipmap.adv_2, 10 * 1000));

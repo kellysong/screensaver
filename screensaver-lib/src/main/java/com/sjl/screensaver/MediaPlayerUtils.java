@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
@@ -250,12 +251,20 @@ public class MediaPlayerUtils implements MediaPlayer.OnPreparedListener,
         int videoWidth = mMediaPlayer.getVideoWidth();
         int videoHeight = mMediaPlayer.getVideoHeight();
 
-        int surfaceWidth = mSurfaceView.getWidth();
-        int surfaceHeight = mSurfaceView.getHeight();
-
         //根据视频尺寸去计算->视频可以在sufaceView中放大的最大倍数。
         float max;
         Context context = this.mSurfaceView.getContext();
+
+        int width = context.getResources().getDisplayMetrics().widthPixels;;     // 屏幕宽度（像素）
+        int height = context.getResources().getDisplayMetrics().heightPixels;;   // 屏幕高度（像素）
+
+//        int surfaceWidth = mSurfaceView.getWidth();
+//        int surfaceHeight = mSurfaceView.getHeight();
+
+        int surfaceWidth = Math.max(mSurfaceView.getWidth(),width);
+        int surfaceHeight = Math.max(mSurfaceView.getHeight(),height);
+
+
 //        ViewParent parent = this.mSurfaceView.getParent();
 //        FrameLayout mParent = (FrameLayout) parent;
         if (context.getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
